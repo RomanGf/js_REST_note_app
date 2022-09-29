@@ -8,8 +8,6 @@ export interface Note {
   archived: boolean;
 }
 
-
-
 export interface CategoryStatistic {
   category: string;
   archived: number;

@@ -1,5 +1,5 @@
 import * as repo from "../repositories/note";
-import {Request, Response} from "express"
+import { Request, Response } from "express";
 
 export const getNotes = (req: Request, res: Response) => {
   res.send(repo.getNotes());

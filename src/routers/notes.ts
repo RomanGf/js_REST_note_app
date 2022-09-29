@@ -5,7 +5,7 @@ import {
   getNotes,
   updateNote,
   deleteNote,
-  postNote
+  postNote,
 } from "../services/notes.service";
 
 import { Validator } from "../middlewares/Validator";

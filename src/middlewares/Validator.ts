@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from "express";
 import pkg from "http-errors";
 import { errors } from "express-validation";
 
-
 export const Validator = function (validator: string) {
   console.log(pkg[404]);
   if (!Validators.hasOwnProperty(validator))

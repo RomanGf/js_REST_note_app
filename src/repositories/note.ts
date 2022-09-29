@@ -1,7 +1,6 @@
 import { initialState } from "../helpers/initialState";
 import { CategoryStatistic, Note } from "../models/note.model";
 
-
 const NOTES: Note[] = initialState;
 
 export const getNotes = () => {
@@ -17,7 +16,7 @@ export const getNote = (id: number) => {
 };
 
 export const getNoteStatic = () => {
-  const categories: {[key: string]: Note[]} = {
+  const categories: { [key: string]: Note[] } = {
     Task: [],
     Idea: [],
     "Random Thought": [],
@@ -69,8 +68,8 @@ export const updateNote = (
   archived: boolean
 ) => {
   const note = NOTES.find((x: Note) => x.id === id);
-  if (!note){
-    return " ss"
+  if (!note) {
+    return " ss";
   }
   note.title = title;
   note.content = content;
