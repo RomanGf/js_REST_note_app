@@ -1,7 +1,7 @@
 import * as repo from "../repositories/notes.repository";
 import { Request, Response } from "express";
 import { Note } from "../models/note.model";
-import { CategoryStatistic } from "../models/category-Statistic.model";
+import { CategoryStatistic } from "../models/category-statistic.model";
 
 export const getNotes = (req: Request, res: Response) => {
   res.send(repo.getNotes());

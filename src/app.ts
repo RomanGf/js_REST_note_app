@@ -1,4 +1,4 @@
-import notesRouters from "./routers/notes";
+import notesRouters from "./routers/notes.router";
 
 import express, { Application } from "express";
 
