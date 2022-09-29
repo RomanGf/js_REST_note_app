@@ -1,4 +1,4 @@
-import { initialState } from "../helpers/initialState";
+import { initialState } from "../helpers/initial-state";
 import { Note } from "../models/note.model";
 
 const NOTES: Note[] = initialState;
@@ -15,7 +15,7 @@ export const getNote = (id: number) => {
   return note;
 };
 
-export const postNote = (
+export const addNote = (
   title: string,
   content: string,
   category: string,

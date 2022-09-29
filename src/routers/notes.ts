@@ -8,7 +8,7 @@ import {
   postNote,
 } from "../services/notes.service";
 
-import { Validator } from "../middlewares/Validator";
+import { Validator } from "../middlewares/model-validator.middleware";
 
 const router = express.Router();
 
