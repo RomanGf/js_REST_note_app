@@ -79,7 +79,7 @@ export const updateNote = (
 };
 
 export const deleteNote = (id: number) => {
-  const note = NOTES.find((x) => x.id === id);
+  const note = NOTES.find((x: Note) => x.id === id);
 
   if (!note) {
     return "The note with the given ID was not found";

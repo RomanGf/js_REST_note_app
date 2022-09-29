@@ -25,14 +25,6 @@ export const postNote = (req: Request, res: Response) => {
 };
 
 export const updateNote = (req: Request, res: Response) => {
-  console.log(
-    "------------",
-    req.params.title,
-    req.params.content,
-    req.params.category,
-    req.params.archived,
-    "----------------"
-  );
   res.send(
     repo.updateNote(
       parseInt(req.params.id),
