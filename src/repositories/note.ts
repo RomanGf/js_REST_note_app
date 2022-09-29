@@ -1,5 +1,5 @@
 import { initialState } from "../helpers/initialState";
-import { CategoryStatistic, Note } from "../models/note.model";
+import { Note } from "../models/note.model";
 
 const NOTES: Note[] = initialState;
 
@@ -13,31 +13,6 @@ export const getNote = (id: number) => {
     return "The note with the given ID was not found";
   }
   return note;
-};
-
-export const getNoteStatic = () => {
-  const categories: { [key: string]: Note[] } = {
-    Task: [],
-    Idea: [],
-    "Random Thought": [],
-  };
-
-  NOTES.forEach((element: Note) => {
-    if (Object.keys(categories).includes(element.category)) {
-      categories[element.category].push(element);
-    }
-  });
-
-  let result: CategoryStatistic[] = [];
-
-  Object.entries(categories).map(([key, value]) => {
-    result.push({
-      category: key,
-      archived: value.filter((x: Note) => !x.archived).length,
-      unarchive: value.filter((x: Note) => x.archived).length,
-    });
-  });
-  return result;
 };
 
 export const postNote = (
