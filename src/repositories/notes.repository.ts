@@ -19,15 +19,16 @@ export const addNote = (
   title: string,
   content: string,
   category: string,
-  archived: boolean
+  archived: boolean,
+  contentDates: string
 ) => {
   const note = {
-    id: NOTES.length + 1,
+    id: Math.floor(Math.random() * 1000),
     title: title,
     content: content,
     category: category,
     date_created: new Date().toLocaleDateString(),
-    dates: "",
+    dates: contentDates,
     archived: archived,
   };
 
@@ -40,16 +41,18 @@ export const updateNote = (
   title: string,
   content: string,
   category: string,
-  archived: boolean
+  archived: boolean,
+  contentDates: string
 ) => {
   const note = NOTES.find((x: Note) => x.id === id);
   if (!note) {
-    return " ss";
+    return "The note with the given ID was not found";
   }
   note.title = title;
   note.content = content;
   note.category = category;
   note.archived = archived;
+  note.dates = contentDates;
   return note;
 };
 

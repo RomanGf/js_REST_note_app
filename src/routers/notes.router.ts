@@ -6,7 +6,7 @@ import {
   updateNote,
   deleteNote,
   postNote,
-} from "../services/notes.service";
+} from "../controllers/notes.controller";
 
 import { Validator } from "../middlewares/model-validator.middleware";
 
@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/", getNotes);
 
-router.get("/static", getNoteStatic);
+router.get("/stats", getNoteStatic);
 
 router.get("/:id", getNote);
 

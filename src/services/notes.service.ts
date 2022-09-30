@@ -1,17 +1,19 @@
 import * as repo from "../repositories/notes.repository";
 import { Request, Response } from "express";
 import { Note } from "../models/note.model";
+import { CreateNoteModel } from "../models/create-note.model";
 import { CategoryStatistic } from "../models/category-statistic.model";
+import { getConcatenatedDatesFromString } from "../helpers/date-utils";
 
-export const getNotes = (req: Request, res: Response) => {
-  res.send(repo.getNotes());
+export const getNotes = () => {
+  return repo.getNotes();
 };
 
-export const getNote = (req: Request, res: Response) => {
-  res.send(repo.getNote(parseInt(req.params.id)));
+export const getNote = (id: number) => {
+  return repo.getNote(id);
 };
 
-export const getNoteStatic = (req: Request, res: Response) => {
+export const getNoteStatic = () => {
   const notes = repo.getNotes();
   const categories: { [key: string]: Note[] } = {
     Task: [],
@@ -30,36 +32,34 @@ export const getNoteStatic = (req: Request, res: Response) => {
   Object.entries(categories).map(([key, value]) => {
     result.push({
       category: key,
-      archived: value.filter((x: Note) => !x.archived).length,
-      unarchive: value.filter((x: Note) => x.archived).length,
+      archived: value.filter((x: Note) => x.archived).length,
+      unarchive: value.filter((x: Note) => !x.archived).length,
     });
   });
-  res.send(result);
+  return result
 };
 
-export const postNote = (req: Request, res: Response) => {
-  res.send(
-    repo.addNote(
-      req.body.title,
-      req.body.content,
-      req.body.category,
-      req.body.archived
-    )
+export const postNote = (note: CreateNoteModel): Note => {
+  return repo.addNote(
+    note.title,
+    note.content,
+    note.category,
+    note.archived,
+    getConcatenatedDatesFromString(note.content)
   );
 };
 
-export const updateNote = (req: Request, res: Response) => {
-  res.send(
-    repo.updateNote(
-      parseInt(req.params.id),
-      req.body.title,
-      req.body.content,
-      req.body.category,
-      req.body.archived
-    )
+export const updateNote = (id: number, note: CreateNoteModel) => {
+  return repo.updateNote(
+    id,
+    note.title,
+    note.content,
+    note.category,
+    note.archived,
+    getConcatenatedDatesFromString(note.content)
   );
 };
 
-export const deleteNote = (req: Request, res: Response) => {
-  res.send(repo.deleteNote(parseInt(req.params.id)));
+export const deleteNote = (id: number) => {
+  return repo.deleteNote(id);
 };
