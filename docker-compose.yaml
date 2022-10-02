@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/usr/app
+    command: npm run dev
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
