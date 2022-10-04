@@ -10,22 +10,14 @@ export const getNotes = async () => {
   return notes;
 };
 
-export const getNote = async (Id: number) => {
-  const note = await repo.getNote(Id);
+export const getNote = async (id: number) => {
+  const note = await repo.getNote(id);
   return note;
 };
 
 export const getNoteStatic = async () => {
   const notes = (await repo.getNotes()).map((note) => {
-    return {
-      id: note.id as number,
-      title: note.title,
-      content: note.content,
-      category: note.category,
-      date_created: note.date_created,
-      content_dates: note.content_dates,
-      archived: note.archived,
-    } as NoteDto;
+    return mapToDtoFromDbModel(note);
   });
   const categories: { [key: string]: NoteDto[] } = {
     Task: [],
@@ -62,20 +54,16 @@ export const postNote = async (
   return mapToDtoFromDbModel(note);
 };
 
-export const updateNote = async (Id: number, note: CreateNoteModel) => {
-  const editedNote = await repo.updateNote(Id, {
+export const updateNote = async (id: number, note: CreateNoteModel) => {
+  const editedNote = await repo.updateNote(id, {
     ...note,
     content_dates: getConcatenatedDatesFromString(note.content),
   });
-  // console.log({
-  //   ...note,
-  //   content_dates: getConcatenatedDatesFromString(note.content),
-  // });
 
   return mapToDtoFromDbModel(editedNote);
 };
 
-export const deleteNote = async (Id: number) => {
-  const note = await repo.deleteNote(Id);
+export const deleteNote = async (id: number) => {
+  const note = await repo.deleteNote(id);
   return note;
 };

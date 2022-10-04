@@ -10,8 +10,8 @@ export const getNotes = async () => {
   return notes;
 };
 
-export const getNote = async (Id: number) => {
-  const note = await NoteDbModel.findByPk(Id);
+export const getNote = async (id: number) => {
+  const note = await NoteDbModel.findByPk(id);
   if (!note) {
     throw "The note with the given ID was not found";
   }
@@ -26,20 +26,20 @@ export const addNote = async (createModel: CreateNoteModel) => {
   return note;
 };
 
-export const updateNote = async (Id: number, updateDto: CreateNoteModel) => {
+export const updateNote = async (id: number, updateDto: CreateNoteModel) => {
   await NoteDbModel.update(updateDto, {
-    where: { id: Id },
+    where: { id: id },
     returning: true,
   });
-  const note = await NoteDbModel.findByPk(Id);
+  const note = await NoteDbModel.findByPk(id);
   if (!note) {
     throw "The note with the given ID was not found";
   }
   return note;
 };
 
-export const deleteNote = async (Id: number) => {
-  const note = await NoteDbModel.findByPk(Id);
+export const deleteNote = async (id: number) => {
+  const note = await NoteDbModel.findByPk(id);
 
   if (!note) {
     throw "The note with the given ID was not found";
