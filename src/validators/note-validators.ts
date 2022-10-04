@@ -1,13 +1,14 @@
-import { Joi } from "express-validation";
+import { Joi } from 'express-validation';
+import { ObjectSchema } from 'joi';
 
-export const notesSchema = Joi.object({
+export const notesSchema: ObjectSchema = Joi.object({
   title: Joi.string().min(3).required(),
   content: Joi.string().min(3).required(),
   category: Joi.string().min(3).required(),
   archived: Joi.boolean().required(),
 });
 
-export const noteUpdateSchema = Joi.object({
+export const noteUpdateSchema: ObjectSchema = Joi.object({
   title: Joi.string().min(3),
   content: Joi.string().min(3),
   category: Joi.string().min(3),

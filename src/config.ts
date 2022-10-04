@@ -1,6 +1,8 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
+import { load } from 'ts-dotenv';
 
+const env = load({
+  DB_DEV_URL: String,
+});
 
-const url = process.env["DB_DEV_URL"];
-
-export const sequelize = new Sequelize(url as string);
+export const sequelize = new Sequelize(env.DB_DEV_URL);

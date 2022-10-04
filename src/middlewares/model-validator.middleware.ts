@@ -18,3 +18,4 @@ export const Validator = function (validator: string) {
     }
   };
 };
+
