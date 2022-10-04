@@ -1,6 +1,7 @@
-import notesRouters from "./routers/notes.router";
+import { router as notesRouters } from "./routers/notes.router";
 
-import express, { Application } from "express";
+import express from "express";
+import { Application } from "express";
 
 const app: Application = express();
 

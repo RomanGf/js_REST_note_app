@@ -3,6 +3,7 @@ version: '3.9'
 services:
 
   server:
+    container_name: notes_node_api
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,14 +13,19 @@ services:
     volumes:
       - .:/usr/app
     command: npm run dev
+    environment:
+      - DB_DEV_URL=postgres://postgres:postgres@db:5432/postgres
+    depends_on:
+      - db
 
   db:
+    container_name: postgres-RMN
     image: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5434:5432"
+      - "5432:5432"
     volumes:
       - data:/var/lib/postgresql/data
 

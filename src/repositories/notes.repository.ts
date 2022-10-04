@@ -1,70 +1,51 @@
-import { initialState } from "../helpers/initial-state";
-import { Note } from "../models/note.model";
+import { getNoteModel } from "../db_models/note";
+import { sequelize } from "../config";
+import { CreateNoteModel } from "../dto_models/create-note.model";
 
-const NOTES: Note[] = initialState;
+const NoteDbModel = getNoteModel(sequelize);
 
-export const getNotes = () => {
-  return NOTES;
+export const getNotes = async () => {
+  const notes = await NoteDbModel.findAll();
+
+  return notes;
 };
 
-export const getNote = (id: number) => {
-  const note = NOTES.find((x) => x.id === id);
+export const getNote = async (Id: number) => {
+  const note = await NoteDbModel.findByPk(Id);
   if (!note) {
-    return "The note with the given ID was not found";
+    throw "The note with the given ID was not found";
   }
   return note;
 };
 
-export const addNote = (
-  title: string,
-  content: string,
-  category: string,
-  archived: boolean,
-  contentDates: string
-) => {
-  const note = {
-    id: Math.floor(Math.random() * 1000),
-    title: title,
-    content: content,
-    category: category,
-    date_created: new Date().toLocaleDateString(),
-    dates: contentDates,
-    archived: archived,
-  };
+export const addNote = async (createModel: CreateNoteModel) => {
+  const note = await NoteDbModel.create({
+    ...createModel,
+  });
 
-  NOTES.push(note);
   return note;
 };
 
-export const updateNote = (
-  id: number,
-  title: string,
-  content: string,
-  category: string,
-  archived: boolean,
-  contentDates: string
-) => {
-  const note = NOTES.find((x: Note) => x.id === id);
+export const updateNote = async (Id: number, updateDto: CreateNoteModel) => {
+  await NoteDbModel.update(updateDto, {
+    where: { id: Id },
+    returning: true,
+  });
+  const note = await NoteDbModel.findByPk(Id);
   if (!note) {
-    return "The note with the given ID was not found";
+    throw "The note with the given ID was not found";
   }
-  note.title = title;
-  note.content = content;
-  note.category = category;
-  note.archived = archived;
-  note.dates = contentDates;
   return note;
 };
 
-export const deleteNote = (id: number) => {
-  const note = NOTES.find((x: Note) => x.id === id);
+export const deleteNote = async (Id: number) => {
+  const note = await NoteDbModel.findByPk(Id);
 
   if (!note) {
-    return "The note with the given ID was not found";
+    throw "The note with the given ID was not found";
   }
 
-  const index = NOTES.indexOf(note);
-  NOTES.splice(index, 1);
+  await note.destroy();
 
   return note;
 };

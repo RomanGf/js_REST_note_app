@@ -6,3 +6,10 @@ export const notesSchema = Joi.object({
   category: Joi.string().min(3).required(),
   archived: Joi.boolean().required(),
 });
+
+export const noteUpdateSchema = Joi.object({
+  title: Joi.string().min(3),
+  content: Joi.string().min(3),
+  category: Joi.string().min(3),
+  archived: Joi.boolean(),
+});

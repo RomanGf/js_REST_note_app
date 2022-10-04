@@ -1,9 +1,9 @@
-export interface Note {
+export interface NoteDto {
   id: number;
   title: string;
   content: string;
   category: string;
   date_created: string;
-  dates: string;
+  content_dates: string;
   archived: boolean;
 }

@@ -10,7 +10,7 @@ import {
 
 import { Validator } from "../middlewares/model-validator.middleware";
 
-const router = express.Router();
+export const router = express.Router();
 
 router.get("/", getNotes);
 
@@ -22,6 +22,4 @@ router.post("/", Validator("notes"), postNote);
 
 router.delete("/:id", deleteNote);
 
-router.patch("/:id", Validator("notes"), updateNote);
-
-export default router;
+router.patch("/:id", Validator("updateNote"), updateNote);
