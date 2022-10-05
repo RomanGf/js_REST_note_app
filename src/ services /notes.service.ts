@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { NotesRepository } from './app.repository';
-import { NoteDto } from './dto_models/note.model';
-import { getConcatenatedDatesFromString } from './helpers/date-utils';
-import { mapToDtoFromDbModel } from './mappers/note.mappers';
-import { CategoryStatistic } from './dto_models/category-statistic.model';
-import { CreateNoteModel } from './dto_models/create-note.model';
+import { NotesRepository } from '../repositories/notes.repository';
+import { NoteDto } from '../dto_models/note.model';
+import { getConcatenatedDatesFromString } from '../helpers/date-utils';
+import { mapToDtoFromDbModel } from '../mappers/note.mappers';
+import { CategoryStatistic } from '../dto_models/category-statistic.model';
+import { CreateNoteModel } from '../dto_models/create-note.model';
 
 @Injectable()
 export class NotesService {

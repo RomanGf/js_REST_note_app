@@ -7,8 +7,8 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { NotesService } from './app.service';
-import { CreateNoteModel } from './dto_models/create-note.model';
+import { NotesService } from '../ services /notes.service';
+import { CreateNoteModel } from '../dto_models/create-note.model';
 
 @Controller('notes')
 export class AppController {

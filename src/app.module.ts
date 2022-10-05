@@ -4,9 +4,9 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { NotesRepository } from './app.repository';
-import { NotesService } from './app.service';
+import { AppController } from './controllers/notes.controller';
+import { NotesRepository } from './repositories/notes.repository';
+import { NotesService } from './ services /notes.service';
 import { Validator } from './middlewares/model-validator.middleware';
 
 @Module({

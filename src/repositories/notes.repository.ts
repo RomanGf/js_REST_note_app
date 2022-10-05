@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { sequelize } from './config';
-import { getNoteModel } from './db_models/note';
-import { CreateNoteModel } from './dto_models/create-note.model';
+import { sequelize } from '../config';
+import { getNoteModel } from '../db_models/note';
+import { CreateNoteModel } from '../dto_models/create-note.model';
 
 const NoteDbModel = getNoteModel(sequelize);
 
