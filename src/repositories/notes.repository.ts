@@ -1,70 +1,51 @@
-import { initialState } from "../helpers/initial-state";
-import { Note } from "../models/note.model";
+import { Injectable } from '@nestjs/common';
+import { sequelize } from '../config';
+import { getNoteModel } from '../db_models/note';
+import { CreateNoteModel } from '../dto_models/create-note.model';
 
-const NOTES: Note[] = initialState;
+const NoteDbModel = getNoteModel(sequelize);
 
-export const getNotes = () => {
-  return NOTES;
-};
+@Injectable()
+export class NotesRepository {
 
-export const getNote = (id: number) => {
-  const note = NOTES.find((x) => x.id === id);
-  if (!note) {
-    return "The note with the given ID was not found";
+  async getNotes() {
+    const notes = await NoteDbModel.findAll();
+    return notes;
   }
-  return note;
-};
-
-export const addNote = (
-  title: string,
-  content: string,
-  category: string,
-  archived: boolean,
-  contentDates: string
-) => {
-  const note = {
-    id: Math.floor(Math.random() * 1000),
-    title: title,
-    content: content,
-    category: category,
-    date_created: new Date().toLocaleDateString(),
-    dates: contentDates,
-    archived: archived,
-  };
-
-  NOTES.push(note);
-  return note;
-};
-
-export const updateNote = (
-  id: number,
-  title: string,
-  content: string,
-  category: string,
-  archived: boolean,
-  contentDates: string
-) => {
-  const note = NOTES.find((x: Note) => x.id === id);
-  if (!note) {
-    return "The note with the given ID was not found";
+  async getNote(Id: number) {
+    const note = await NoteDbModel.findByPk(Id);
+    if (!note) {
+      throw 'The note with the given ID was not found';
+    }
+    return note;
   }
-  note.title = title;
-  note.content = content;
-  note.category = category;
-  note.archived = archived;
-  note.dates = contentDates;
-  return note;
-};
+  async addNote(createModel: CreateNoteModel) {
+    const note = await NoteDbModel.create({
+      ...createModel,
+    });
 
-export const deleteNote = (id: number) => {
-  const note = NOTES.find((x: Note) => x.id === id);
-
-  if (!note) {
-    return "The note with the given ID was not found";
+    return note;
   }
+  async updateNote(Id: number, updateDto: CreateNoteModel) {
+    await NoteDbModel.update(updateDto, {
+      where: { id: Id },
+      returning: true,
+    });
+    const note = await NoteDbModel.findByPk(Id);
+    if (!note) {
+      throw 'The note with the given ID was not found';
+    }
+    return note;
+  }
+  async deleteNote(Id: number) {
+    const note = await NoteDbModel.findByPk(Id);
 
-  const index = NOTES.indexOf(note);
-  NOTES.splice(index, 1);
+    if (!note) {
+      throw 'The note with the given ID was not found';
+    }
 
-  return note;
-};
+    await note.destroy();
+
+    return note;
+  }
+}

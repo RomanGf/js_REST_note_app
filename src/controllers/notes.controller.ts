@@ -1,40 +1,46 @@
-import { Request, Response } from "express";
-import * as service from "../services/notes.service";
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+} from '@nestjs/common';
+import { NotesService } from '../ services /notes.service';
+import { CreateNoteModel } from '../dto_models/create-note.model';
 
-export const getNotes = (req: Request, res: Response) => {
-  res.send(service.getNotes());
-};
+@Controller('notes')
+export class AppController {
+  constructor(private readonly appService: NotesService) {}
 
-export const getNote = (req: Request, res: Response) => {
-  res.send(service.getNote(parseInt(req.params.id)));
-};
+  @Get()
+  async getNotes() {
+    return await this.appService.getNotes();
+  }
 
-export const postNote = (req: Request, res: Response) => {
-  res.send(
-    service.postNote({
-      title: req.body.title,
-      content: req.body.content,
-      category: req.body.category,
-      archived: req.body.archived,
-    })
-  );
-};
+  @Get('stats')
+  async getNoteStatic() {
+    return await this.appService.getNoteStatic();
+  }
 
-export const updateNote = (req: Request, res: Response) => {
-  res.send(
-    service.updateNote(parseInt(req.params.id), {
-      title: req.body.title,
-      content: req.body.content,
-      category: req.body.category,
-      archived: req.body.archived,
-    })
-  );
-};
+  @Get(':id')
+  async getNote(@Param() params) {
+    return await this.appService.getNote(parseInt(params.id));
+  }
 
-export const getNoteStatic = (req: Request, res: Response) => {
-  res.send(service.getNoteStatic());
-};
+  @Post()
+  async postNote(@Body() createDto: CreateNoteModel) {
+    return await this.appService.postNote(createDto);
+  }
 
-export const deleteNote = (req: Request, res: Response) => {
-  res.send(service.deleteNote(parseInt(req.params.id)));
-};
+  @Patch(':id')
+  async updateNote(@Param() params, @Body() updateDto: CreateNoteModel) {
+    return await this.appService.updateNote(parseInt(params.id), updateDto);
+  }
+
+  @Delete(':id')
+  async deleteNote(@Param() params) {
+    return await this.appService.deleteNote(parseInt(params.id));
+  }
+}
